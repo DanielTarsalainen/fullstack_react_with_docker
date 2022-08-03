@@ -1,0 +1,18 @@
+{
+  "version": "3",
+  "configurations": [
+    {
+      "name": "Docker: Attach to Node",
+      "type": "legacy-node2",
+      "request": "attach",
+      "port": 9229,
+      "address": "0.0.0.0",
+      "localRoot": "C:/react_with_docker/globoapp_backend",
+      "remoteRoot": "/app",
+      "skipFiles": [
+        "${work${workspaceFolder}/**/node_modules/**/*.js",
+        "<node_internals>/**/*.js"
+      ]
+    }
+  ]
+}

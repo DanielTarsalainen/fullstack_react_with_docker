@@ -1,0 +1,39 @@
+version: "3"
+services:
+  proxy:
+    build:
+      context: ./proxy
+    ports:
+      - 8081:80
+  redis-server:
+    image: "redis"
+  node-app:
+    restart: on-failure
+    build:
+      context: ./globoapp_backend
+    ports:
+      - "8080:8080"
+      - "9229:9229"
+    container_name: api-server
+  ui:
+    build:
+      context: ./globoapp
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    environment:
+      WATCHPACK_POLLING: "true"
+    volumes:
+      - ./globoapp:/usr/app
+  postgres:
+    image: postgres
+    volumes:
+      - postgres:/var/lib/postgresql/data
+      - ./init-database.sql:/docker-entrypoint-initdb.d/init-database.sql
+    environment:
+      - WATCHPACK_POLLING=true
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+
+volumes:
+  postgres:
